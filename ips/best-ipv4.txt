@@ -1,0 +1,3 @@
+# 首次自动更新后，这里会填入测速排前 20 的 IPv4
+# 在此之前，先用 ips/cloudflare-ips-v4.txt 里的官方段
+# 手动跑一次 Actions 也可以立即生成
