@@ -29,7 +29,9 @@ jobs:
           file cfst.tar.gz
           tar -xzf cfst.tar.gz
           ls -l
-          if [ -f cfst ]; then chmod +x cfst; elif [ -f CloudflareST ]; then mv CloudflareST cfst; chmod +x cfst; fi
+          ls -l cfst_linux_amd64 || true
+          if [ -f cfst_linux_amd64/cfst ]; then mv cfst_linux_amd64/cfst ./cfst; elif [ -f cfst_linux_amd64/CloudflareST ]; then mv cfst_linux_amd64/CloudflareST ./cfst; elif [ -f cfst ]; then :; elif [ -f CloudflareST ]; then mv CloudflareST cfst; fi
+          chmod +x cfst
           ls -l cfst
 
       - name: Speed test IPv4
