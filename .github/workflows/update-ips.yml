@@ -25,13 +25,16 @@ jobs:
         run: |
           VERSION=$(curl -s https://api.github.com/repos/XIU2/CloudflareSpeedTest/releases/latest | grep '"tag_name"' | cut -d '"' -f 4)
           echo "CloudflareSpeedTest $VERSION"
-          curl -sL "https://github.com/XIU2/CloudflareSpeedTest/releases/download/${VERSION}/CloudflareSpeedTest_linux_amd64.tar.gz" -o cfst.tar.gz
+          curl -sL "https://github.com/XIU2/CloudflareSpeedTest/releases/download/${VERSION}/cfst_linux_amd64.tar.gz" -o cfst.tar.gz
+          file cfst.tar.gz
           tar -xzf cfst.tar.gz
-          chmod +x CloudflareST
+          ls -l
+          if [ -f cfst ]; then chmod +x cfst; elif [ -f CloudflareST ]; then mv CloudflareST cfst; chmod +x cfst; fi
+          ls -l cfst
 
       - name: Speed test IPv4
         run: |
-          ./CloudflareST -f ips/cloudflare-ips-v4.txt -o result.csv -n 200 -t 4 -p 10 || true
+          ./cfst -f ips/cloudflare-ips-v4.txt -o result.csv -n 200 -t 4 -p 10 || true
           ls -l result.csv || echo "no result.csv"
 
       - name: Parse results
